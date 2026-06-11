@@ -19,7 +19,10 @@ url = (
 
 data = requests.get(url).json()
 
-print(data)
+if "main" not in data:
+    print("Weather API Error")
+    print(data)
+    exit()
 
 temp = data["main"]["temp"]
 condition = data["weather"][0]["main"]
