@@ -19,6 +19,8 @@ url = (
 
 data = requests.get(url).json()
 
+print(data)
+
 temp = data["main"]["temp"]
 condition = data["weather"][0]["main"]
 

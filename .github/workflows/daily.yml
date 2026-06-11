@@ -1,4 +1,4 @@
-name: Daily Task Bot
+name: Weather Alert Bot
 
 on:
   schedule:
@@ -9,23 +9,18 @@ jobs:
   run-bot:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    env:
+      OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+      EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt
 
-      - name: Run Bot
-        run: python bot.py
-
-      - name: Upload Summary
-        uses: actions/upload-artifact@v4
-        with:
-          name: daily-summary
-          path: daily_summary.txt
+      - run: python bot.py
